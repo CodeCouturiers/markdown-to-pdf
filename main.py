@@ -44,6 +44,9 @@ def convert_md_to_pdf(input_file, output_file=None, css_file=None, css_string=No
         with open(input_file, 'r', encoding='utf-8') as f:
             md_content = f.read()
 
+        # Preserve newlines by adding two spaces at the end of lines
+        md_content = '\n'.join(line + '  ' if line.strip() else line
+                                   for line in md_content.splitlines())
         # Convert markdown to HTML with specific extensions
         html_content = markdown.markdown(
             md_content,
@@ -53,7 +56,8 @@ def convert_md_to_pdf(input_file, output_file=None, css_file=None, css_string=No
                 'codehilite',
                 'toc',
                 'attr_list',
-                'md_in_html'
+                'md_in_html',
+                'nl2br'
             ]
         )
 
